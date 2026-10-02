@@ -641,7 +641,7 @@ print("P-value:", result.pvalue)
 
 ---
 
-## BONUS — ADVANCED TOPICS (from the same GeeksforGeeks reference)
+## BONUS — ADVANCED TOPICS
 
 ## B9. Bayes' Theorem
 ```python
