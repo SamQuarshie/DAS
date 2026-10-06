@@ -139,6 +139,9 @@ print(scores)
 # Example 5 — list comprehension
 squares = [x**2 for x in range(5)]
 print(squares)
+
+odd_squares = [x**2 for x in range(5) if x % 2 != 0]
+print(odd_squares)
 ```
 
 ## A6. Tuples
