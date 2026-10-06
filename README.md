@@ -1,5 +1,5 @@
 # COMPREHENSIVE REVISION
-### Python Basics (from the course slides) + Statistics for Data Science 
+### Python Basics + Statistics for Data Science 
 
 **How to use this file:** Every code block below has been tested and runs with no errors. Each section is self-contained — copy the whole block for a topic and run it together (don't mix blocks from different sections in one run, since some reuse variable names like `data`).
 
@@ -114,6 +114,37 @@ print("-".join(words))
 # Example 5 — strip and replace
 text = "  hello world  "
 print(text.strip().replace("world", "python"))
+
+# Example 6 - Finding and Counting
+word = "banana"
+
+print(word.find("nana"))   # position
+print(phrase.count("a"))   # count
+
+# Example 7 - What starts and end strings
+filename = "report.pdf"
+
+print(filename.startswith("rep"))
+print(filename.endswith(".csv"))
+
+# Example 8 - Check the content of strings
+User_id = "12345"
+username = "coder123"
+
+print(user_id.isdigit())
+print(username.isalpha())
+
+# Example 9 - step slicing(skipping characters) using[start:stop:step]
+alphabet = "abcdef"
+
+print(alphabet[::2])   # every second letter
+
+# Example 10 - case swapping
+title = "i told you so"
+mixed = "daTA ScienCE"
+
+print(title.tittle())  # captalize every word
+print(mixed.swapcase())  # flips lower to upper and upper to lower
 ```
 
 ## A5. Lists
@@ -140,8 +171,14 @@ print(scores)
 squares = [x**2 for x in range(5)]
 print(squares)
 
+# Example 6 - Filtering Numbers
 odd_squares = [x**2 for x in range(5) if x % 2 != 0]
 print(odd_squares)
+
+# Example 7 - Filtering towns
+towns = ["Zugu", "Takoradi", "Ho", "Tamale", "Accra", "Techiman", "Kumasi"]
+ cities_>_5 = [t.upper() for t in towns if len(t) >= 5]
+ print(cities_>_5)
 ```
 
 ## A6. Tuples
@@ -169,6 +206,23 @@ print(students[1])
 # Example 5 — count and index methods
 numbers = (1, 2, 2, 3, 2)
 print(numbers.count(2), numbers.index(3))
+
+# Example 6 - Counting Items
+response = ("Yes", "No", "Yes", "Maybe", "Yes")
+print(response.count("Yes"))
+print(response.count("No"))
+
+# Example 7 - Finding Positions with index
+winners = ("Alice", "Bob", "Charlie", "Bob")
+print(winners.index("Bob"))
+
+# Example 8 - Warning ⚠️ 
+colors = ("red", "blue", "green")
+
+if "yellow" in colors:
+    print(colors.index("yellow"))
+else:
+    print("'yellow' is not in the tuple!")
 ```
 
 ## A7. Dictionaries
@@ -191,6 +245,19 @@ print(person.get("salary", "Not specified"))
 # Example 5 — nested dictionary
 company = {"ceo": {"name": "Ama", "age": 45}}
 print(company["ceo"]["name"])
+
+# Example 6 - Delete Key
+person = {"name": "Kwame", "age": 30, "city": "Accra"}
+removed_city = person.pop("city", "Key not found")
+print(f"Removed value: {removed_city}") 
+print(person)
+
+# Example 7 - loop through dictionary
+person_new = {"name": "Kwame", "age": 30, "job": "Developer"}
+
+# loop through keys and values simultaneously
+for key, value in person.items():
+    print(f"The person's {key} is {value}")
 ```
 
 ## A8. Sets
