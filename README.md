@@ -131,7 +131,7 @@ print(filename.endswith(".csv"))
 User_id = "12345"
 username = "coder123"
 
-print(user_id.isdigit())
+print(User_id.isdigit())
 print(username.isalpha())
 
 # Example 9 - step slicing(skipping characters) using[start:stop:step]
