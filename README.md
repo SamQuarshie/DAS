@@ -117,7 +117,7 @@ print(text.strip().replace("world", "python"))
 
 # Example 6 - Finding and Counting
 word = "banana"
-
+phrase = "banana"
 print(word.find("nana"))   # position
 print(phrase.count("a"))   # count
 
