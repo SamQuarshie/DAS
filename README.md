@@ -143,7 +143,7 @@ print(alphabet[::2])   # every second letter
 title = "i told you so"
 mixed = "daTA ScienCE"
 
-print(title.tittle())  # captalize every word
+print(title.title())  # captalize every word
 print(mixed.swapcase())  # flips lower to upper and upper to lower
 ```
 
