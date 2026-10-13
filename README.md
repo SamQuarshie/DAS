@@ -177,8 +177,8 @@ print(odd_squares)
 
 # Example 7 - Filtering towns
 towns = ["Zugu", "Takoradi", "Ho", "Tamale", "Accra", "Techiman", "Kumasi"]
- cities_>_5 = [t.upper() for t in towns if len(t) >= 5]
- print(cities_>_5)
+ cities_gt_5 = [t.upper() for t in towns if len(t) >= 5]
+ print(cities_gt_5)
 ```
 
 ## A6. Tuples
@@ -241,10 +241,12 @@ for key, value in person.items():
 
 # Example 4 — .get() with a default value
 print(person.get("salary", "Not specified"))
+print(person.get("name"))
 
 # Example 5 — nested dictionary
 company = {"ceo": {"name": "Ama", "age": 45}}
 print(company["ceo"]["name"])
+print(company["ceo"].get("Age"))
 
 # Example 6 - Delete Key
 person = {"name": "Kwame", "age": 30, "city": "Accra"}
@@ -439,7 +441,7 @@ print(max(data), min(data))
 print(round(3.14159, 2))
 
 # Example 4 — sorted() with reverse
-print(sorted(data, reverse=True))
+print(sorted(data, reverse=True))   #.sort works on list and sorted works on Tuples, str, Dicts
 
 # Example 5 — enumerate()
 for index, value in enumerate(data):
