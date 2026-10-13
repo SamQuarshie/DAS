@@ -258,7 +258,7 @@ print(person)
 person_new = {"name": "Kwame", "age": 30, "job": "Developer"}
 
 # loop through keys and values simultaneously
-for key, value in person.items():
+for key, value in person_new.items():
     print(f"The person's {key} is {value}")
 ```
 
