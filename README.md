@@ -264,6 +264,11 @@ for key, value in person_new.items():
 
 ## A8. Sets
 ```python
+# A set is a collection which is unordered, unchangeable*, and unindexed.
+*Note:* Set items are unchangeable, but you can remove items and add new items. Duplicates are not allowed in sets.
+
+# We can use len on sets, it accepts int, boolean and strings. Sets() creats set list.
+
 # Example 1 — create and print a set
 colors = {"red", "green", "blue"}
 print(colors)
@@ -281,9 +286,43 @@ print(colors)
 a = {1, 2, 3}
 b = {2, 3, 4}
 print(a.union(b), a.intersection(b))
+result = a & b
+print(result)
 
 # Example 5 — difference
 print(a.difference(b))
+print(a-b)
+
+# Example 6 - Set symmetric_difference() Method
+# Return a set that contains all items from both sets, except items that are present in both sets
+x = {"apple", "banana", "cherry"}
+y = {"google", "microsoft", "apple"}
+
+z = x.symmetric_difference(y)
+
+print(z)
+
+# We can use *^* as a shortcut instead of symmetric_difference()
+x = {"apple", "banana", "cherry"}
+y = {"google", "microsoft", "apple"}
+
+z = x ^ y
+
+print(z)
+
+# Example 7 Access a set item
+# We can not using the indexor key  approach to access an item in a set but we can use *for loop*,*in* and *not*
+
+aset = {"apple", "banana", "cherry"}
+
+for x in aset:
+  print(x)
+
+bset = {"apple", "banana", "cherry"}
+
+print("banana" not in bset)
+
+# Example 8 Add items from another set, use *update()*
 ```
 
 ## A9. Mutable vs Immutable
@@ -337,7 +376,7 @@ else:
 # Example 3 — nested if
 age = 20
 has_ticket = True
-if age >= 18:
+if age > 18:
     if has_ticket:
         print("Entry allowed")
     else:
