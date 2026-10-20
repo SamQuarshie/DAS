@@ -231,30 +231,114 @@ else:
 person = {"name": "Kwame", "age": 30}
 print(person["name"])
 
-# Example 2 — add/update a key
-person["city"] = "Accra"
-print(person)
+# Example 1.1 
+dic = {
+    "brand": "Ford",
+    "model": "Mustang",
+    "year": 1964
+}
+print(dic)
 
-# Example 3 — loop through key-value pairs
-for key, value in person.items():
-    print(key, value)
+# Example 2 Dictionaries does not allow duplicate of keys
+dic = {
+    "brand": "Ford",
+    "model": "Mustang",
+    "year": 1964
+    "year": 2020
+}
+print(dic)
 
-# Example 4 — .get() with a default value
+# Example 3 Use *len() function to know how many items a dictionary has
+print(len(dic))
+
+# Example 4 dictionary values or items can be of any data type(String,int, boolean, and list )
+dict1 = {
+  "brand": "Ford",
+  "electric": False,
+  "year": 1964,
+  "colors": ["red", "white", "blue"]
+}
+print(type(dic1))
+
+# Ecample 4 We can use the *dict()*
+d = dict(name = "John", age = 36, country = "Norway")
+print(d)
+
+# Example 5 Accessing items in dictionaries
 print(person.get("salary", "Not specified"))
 print(person.get("name"))
 
-# Example 5 — nested dictionary
+sdict = {
+  "brand": "Ford",
+  "model": "Mustang",
+  "year": 1964
+}
+y = sdict["model"]
+print(y)
+ys = sdict.get("model")
+
+# Exampple 6 get the list of keys with *keys()* method
+x = thisdict.keys()
+print(x)
+
+# Example 7 get the values
+a = sdict.values()
+
+car = {
+"brand": "Ford",
+"model": "Mustang",
+"year": 1964
+}
+print(x)
+
+x = car.values()
+
+# Example 8 *items()* method return each item in a dictionary as a tuple in a list
+x = car.items()
+
+car = {
+"brand": "Ford",
+"model": "Mustang",
+"year": 1964
+}
+
+x = car.items()
+
+print(x) #before the change
+
+car["year"] = 2020
+
+print(x) #after the change
+
+# Example 9 — add/update a key
+person["city"] = "Accra"
+print(person)
+
+sdict2 = {
+  "brand": "Ford",
+  "model": "Mustang",
+  "year": 1964
+}
+if "model" in sdict2:
+  print("Yes, 'model' is one of the keys in the thisdict dictionary")
+
+
+# Example 10 — loop through key-value pairs
+for key, value in person.items():
+    print(key, value)
+
+# Example 11 — nested dictionary
 company = {"ceo": {"name": "Ama", "age": 45}}
 print(company["ceo"]["name"])
 print(company["ceo"].get("Age"))
 
-# Example 6 - Delete Key
+# Example 12 - Delete Key
 person = {"name": "Kwame", "age": 30, "city": "Accra"}
 removed_city = person.pop("city", "Key not found")
 print(f"Removed value: {removed_city}") 
 print(person)
 
-# Example 7 - loop through dictionary
+# Example 13 - loop through dictionary
 person_new = {"name": "Kwame", "age": 30, "job": "Developer"}
 
 # loop through keys and values simultaneously
@@ -282,18 +366,44 @@ colors.add("yellow")
 colors.discard("red")
 print(colors)
 
-# Example 4 — union and intersection
+# Example 4 - we can remove an item with *remove()* or *discard()*
+tsset = {"apple", "banana", "cherry"}
+
+tsset.remove("banana")
+
+print(tsset)
+
+# We can use the pop but its not adviceable because it removes a random item or object
+s = tsset.pop()
+print(s)
+print(tsset)
+
+# Example 5 Add items from another set, use  *add* and *update()*
+des_up = {"apple", "banana", "cherry"}
+des_up.add("orange")
+print(des_up)
+
+# Example 6 Add list to a set
+trop = {"pineapple","mango","papaya"}
+des_up.update(trop)
+ups = {"apple", "banana", "cherry"}
+mylist = ["Kiwi","orange"]
+
+ups.udpate(mylist)
+
+
+# Example 7 — union and intersection
 a = {1, 2, 3}
 b = {2, 3, 4}
 print(a.union(b), a.intersection(b))
 result = a & b
 print(result)
 
-# Example 5 — difference
+# Example 7.1 — difference
 print(a.difference(b))
 print(a-b)
 
-# Example 6 - Set symmetric_difference() Method
+# Example 8 - Set symmetric_difference() Method
 # Return a set that contains all items from both sets, except items that are present in both sets
 x = {"apple", "banana", "cherry"}
 y = {"google", "microsoft", "apple"}
@@ -310,7 +420,7 @@ z = x ^ y
 
 print(z)
 
-# Example 7 Access a set item
+# Example 9 Access a set item
 # We can not using the indexor key  approach to access an item in a set but we can use *for loop*,*in* and *not*
 
 aset = {"apple", "banana", "cherry"}
@@ -322,7 +432,21 @@ bset = {"apple", "banana", "cherry"}
 
 print("banana" not in bset)
 
-# Example 8 Add items from another set, use *update()*
+#Example 10 We can clear a set with the method *clear()* and del to delete a ser
+t = {"apple", "banana", "cherry"}
+print(t)
+
+t.clear()
+
+print(t)
+
+tt = {"apple", "banana", "cherry"}
+print(tt)
+
+del(tt)
+
+print(tt)
+
 ```
 
 ## A9. Mutable vs Immutable
@@ -439,6 +563,9 @@ for num in range(5):
 
 ## A12. Functions
 ```python
+# A function is a block of code which only runs when it is called.A function helps avoiding code repetition
+# Function names must start with a letter or underscore thus may contain only numbers, letters and underscores. The names are case sensitive (Power and power are different)
+
 # Example 1 — a simple function
 def greet(name):
     return f"Hello, {name}"
