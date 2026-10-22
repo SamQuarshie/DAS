@@ -612,7 +612,168 @@ print(sorted(data, reverse=True))   #.sort works on list and sorted works on Tup
 # Example 5 — enumerate()
 for index, value in enumerate(data):
     print(index, value)
+
+# To use more of the built in functions we import *math*
+# This gives us the options to use math.ceil, math.floor for rounding, math.sqrt for square roots, math.pi for pi 
 ```
+# Pyhton Dates
+```python
+# A date in Python is not a data type of its own, but we can import a module named datetime to work with dates as date objects.
+# To use datetime in pyhton we need to import the module by name *datetime* so python sees it as an object. This helps python work with it as date objects.
+
+import datetime
+# lets display the current time
+x = datetime.datetime.now()
+print(x)
+
+# lets print the year and name of the week
+x = datetime.datetime.now()
+
+print(x.year)
+print(x.strftime("%A"))
+# str = string, f = format, time = time, "%A" = converts the number to text
+
+# We can create our date objects manually
+x = datetime.datetime(2026, 10, 17)
+print(x)
+```
+
+# JSON
+```python
+# JSON is a syntax for storing and exchanging data. JSON is text, written with JavaScript object notation.
+# To import this module in python we use import *json* which is used to work with json data
+
+When we have a JSON string, we can use or parse the json.loads() method. this will result in a dictionary
+
+# Example 1: lets convert JSON to a python
+import json
+
+# some JSON:
+x =  '{ "name":"John", "age":30, "city":"New York"}'
+
+# parse x:
+y = json.loads(x)
+
+# the result is a Python dictionary:
+print(y["age"])
+
+# Example 2: Reverse_Convert a python to a JSON
+
+# a Python object (dict):
+x = {
+  "name": "John",
+  "age": 30,
+  "city": "New York"
+}
+
+# convert into JSON:
+y = json.dumps(x)
+
+# the result is a JSON string:
+print(y)
+
+*NOTE* you can convert python object of the following types to JSON strings:
+* Dict
+* list
+* tuple
+* int
+* float
+* True
+* False
+* None
+
+# Example 3:  Convert python objects to JSON strings and print the values:
+
+print(json.dumps({"name": "John", "age": 30}))
+print(json.dumps(["apple", "bananas"]))
+print(json.dumps(("apple", "bananas")))
+print(json.dumps("hello"))
+print(json.dumps(42))
+print(json.dumps(31.76))
+print(json.dumps(True))
+print(json.dumps(False))
+print(json.dumps(None))
+
+
+# Convert a Python object containing all data types
+
+x = {
+  "name": "John",
+  "age": 30,
+  "married": True,
+  "divorced": False,
+  "children": ("Ann","Billy"),
+  "pets": None,
+  "cars": [
+    {"model": "BMW 230", "mpg": 27.5},
+    {"model": "Ford Edge", "mpg": 24.1}
+  ]
+}
+
+print(json.dumps(x))
+
+# Example 4: Adding ident to specify the number of indent
+json.dumps(x, indent=4)
+# You can also define the separators, default value is (", ", ": "), which means using a comma and a space to 
+# separate each object, and a colon and a space to separate keys from values
+
+Example 5: using the seperators parameter
+json.dumps(x, indent=4, separators=(". ", " = "))
+
+Example 6: using the sort_keys parameter. This specifies if the output should be sorted or not
+json.dumps(x, indent=4, sort_keys=True)
+```
+# RegEx 
+```python
+re is a built-in package which can be used to work with Regular Expressions. We parse it using import *re*
+# Example 1:  The *findall()* function returns a list containing all matches
+import re
+
+txt = "The rain in Spain"
+x = re.findall("ai", txt)
+print(x)
+
+# If no matches were found, an empty list is returned
+
+
+# The search () Function searches the string for a match, and returns a Match object if there is a match. If there is more than one match, only the first occurrence of the match will be returned
+
+# Example 2: Lests search for the white space
+txt = "The rain in Spain"
+x = re.search("\s", txt)
+
+print("The first white-space character is located in position:", x.start())
+
+# Example 3: If no value is found the output becomes *None*
+txt = "The rain in Spain"
+x = re.search("Portugal", txt)
+print(x)
+
+The split() function returns a list where the string has been split at each match
+# Example 4: split() Function
+txt = "The rain in Spain"
+x = re.split("\s", txt)
+print(x)
+
+We can control the number of split with maxsplit parameter
+# Example 5: 
+txt = "The rain in Spain"
+x = re.split("\s", txt, 1)
+print(x)
+
+The sub() function replaces the matches with the text of your choice
+Example 6: Lets replace every white space character with 9
+
+```
+
+# Numpy
+```python
+
+```
+# References 
+w3schools - https://www.w3schools.com/python/  
+geeksforgeeks - https://www.geeksforgeeks.org/python/python-programming-language-tutorial/
+
 
 ---
 ---
