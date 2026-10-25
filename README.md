@@ -768,6 +768,275 @@ Example 6: Lets replace every white space character with 9
 
 # Numpy
 ```python
+# Introduction
+NumPy stands for numerical Python
+
+# Why is NumPy Faster Than Lists?
+NumPy arrays are stored at one continuous place in memory unlike lists, so processes can access and manipulate them very efficiently
+This behavior is called locality of reference in computer science. This is the main reason why NumPy is faster than lists. Also it is optimized to work with latest CPU architectures.
+
+# NumPy as np
+NumPy is usually imported under the np alias.
+
+NumPy is used to work with arrays. The array object in NumPy is called ndarray. We can create a NumPy ndarray object by using the array() function
+
+Dimensions in arrays is one level of array depth (nested arrays). Nested arrays are arrays that have arrays as their elements.
+
+import numpy as np
+
+arr = np.array([1, 2, 3, 4, 5])
+
+print(arr)
+
+print(type(arr))
+
+# Check NumPy Version
+print(np.__version__)
+
+# NumPy Creating Arrays
+arr = np.array([1, 2, 3, 4, 5])
+
+print(arr)
+
+print(type(arr))
+
+# lets Create a tuple with NumPy
+arr = np.array((1, 2, 3, 4, 5))
+
+print(arr)
+
+# Lets create a 0 - D array
+# 0-D Arrays
+# 0-D arrays, or Scalars, are the elements in an array. Each value in an array is a 0-D array.
+
+arr = np.array(42)
+
+print(arr)
+
+# Lets create 1-D Arrays
+# An array that has 0-D arrays as its elements is called uni-dimensional or 1-D array.These are the most common and basic arrays.
+
+arr = np.array([1, 2, 3, 4, 5])
+
+print(arr)
+
+# Lets create 2-D Arrays
+# An array that has 1-D arrays as its elements is called a 2-D array. These are often used to represent matrix or 2nd order tensors.
+arr = np.array([[1, 2, 3], [4, 5, 6]])
+
+print(arr)
+
+
+# Lets create a 3-D arrays
+# An array that has 2-D arrays (matrices) as its elements is called 3-D array. These are often used to represent a 3rd order tensor.
+arr = np.array([[[1, 2, 3], [4, 5, 6]], [[1, 2, 3], [4, 5, 6]]])
+
+print(arr)
+
+# Lets check the Number of Dimensions
+# NumPy Arrays provides the *ndim* attribute that returns an integer that tells us how many dimensions the array have.
+
+a = np.array(42)
+b = np.array([1, 2, 3, 4, 5])
+c = np.array([[1, 2, 3], [4, 5, 6]])
+d = np.array([[[1, 2, 3], [4, 5, 6]], [[1, 2, 3], [4, 5, 6]]])
+
+print(a.ndim)
+print(b.ndim)
+print(c.ndim)
+print(d.ndim)
+
+# Lets set the dimension higher
+# An array can have any number of dimensions. When the array is created, you can define the number of dimensions by using the ndmin argument.
+
+arr = np.array([1, 2, 3, 4], ndmin=5)
+
+print(arr)
+print('number of dimensions :', arr.ndim)
+
+# NumPy Array Indexing 
+# Access Array Elements
+# Array indexing is the same as accessing an array element. You can access an array element by referring to its index number. The indexes # in NumPy arrays start with 0, meaning that the first element has index 0, and the second has index 1 etc.
+
+arr = np.array([1, 2, 3, 4])
+
+print(arr[0])
+
+# lets get the second element from the following array.
+arr = np.array([1, 2, 3, 4])
+
+print(arr[1])
+
+# Lets get third and fourth elements from the following array and add them.
+arr = np.array([1, 2, 3, 4])
+
+print(arr[2] + arr[3])
+
+# Access 2-D Arrays
+# To access elements from 2-D arrays we can use comma separated integers representing the dimension and the index of the element. Think of 2-D arrays like a table with rows and columns, where the dimension represents the row and the index represents the column.
+
+# Lets access the element on the first row, second column
+arr = np.array([[1,2,3,4,5], [6,7,8,9,10]])
+
+print('2nd element on 1st row: ', arr[0, 1])
+
+# Lets access the element on the 2nd row, 5th column
+arr = np.array([[1,2,3,4,5], [6,7,8,9,10]])
+
+print('5th element on 2nd row: ', arr[1, 4])
+
+# Lets access 3-D Arrays
+# To access elements from 3-D arrays we can use comma separated integers representing the dimensions and the index of the element.
+
+arr = np.array([[[1, 2, 3], [4, 5, 6]], [[7, 8, 9], [10, 11, 12]]])
+
+print(arr[0, 1, 2]) # Accessed the third element of the second array of the first array
+
+# Lets do negative Indexing
+# Use negative indexing to access an array from the end
+
+arr = np.array([[1,2,3,4,5], [6,7,8,9,10]])
+
+print('Last element from 2nd dim: ', arr[1, -1])  #Print the last element from the 2nd dim
+
+
+# NumPy Array Slicing
+# Slicing arrays
+# Slicing in python means taking elements from one given index to another given index. We pass slice instead of index like this: [start:end]. We can also define the step, like this: [start:end:step]. If we don't pass start its considered 0 If we don't pass end its considered length of array in that dimension, If we don't pass step its considered 1
+
+# Lets Slice elements from index 1 to index 5
+arr = np.array([1, 2, 3, 4, 5, 6, 7])
+
+print(arr[1:5])
+
+# lets Slice elements from index 4 to the end of the array
+arr = np.array([1, 2, 3, 4, 5, 6, 7])
+
+print(arr[4:])
+
+# Lets Slice elements from the beginning to index 4
+arr = np.array([1, 2, 3, 4, 5, 6, 7])
+
+print(arr[:4])
+
+
+# Negative Slicing
+# Use the minus operator to refer to an index from the end
+
+arr = np.array([1, 2, 3, 4, 5, 6, 7])
+
+print(arr[-3:-1]) # Slice from the index 3 from the end to index 1 from the end
+
+## STEP
+# Use the step value to determine the step of the slicing
+arr = np.array([1, 2, 3, 4, 5, 6, 7])
+
+print(arr[1:5:2]) # gives us every other element from index 1 to index 5
+
+# lets print every other element from the entire array
+arr = np.array([1, 2, 3, 4, 5, 6, 7])
+
+print(arr[::2])
+
+# Slicing 2-D Arrays
+# Lets slice the second element, slice elements from index 1 to index 4
+arr = np.array([[1, 2, 3, 4, 5], [6, 7, 8, 9, 10]])
+
+print(arr[1, 1:4])
+
+# Lets slice from both elements to return index 2
+arr = np.array([[1, 2, 3, 4, 5], [6, 7, 8, 9, 10]])
+
+print(arr[0:2, 2])
+
+# Lets slice to get a 2-D Array
+arr = np.array([[1, 2, 3, 4, 5], [6, 7, 8, 9, 10]])
+
+print(arr[0:2, 1:4])
+
+# NumPy Data Types
+# Python has default dada types (strings, integer, float, boolean, complex(1.0 + 2.0j))
+
+i - integer
+b - boolean
+u - unsigned integer
+f - float
+c - complex float
+m - timedelta
+M - datetime
+O - object
+S - string
+U - unicode string
+
+# How to check numpy data type
+arr = np.array([1, 2, 3, 4])
+
+print(arr.dtype)
+
+# lets coerce or change any data type
+
+arr = np.array([1, 2, 3, 4], dtype='S')
+
+print(arr)
+print(arr.dtype)
+
+# lets Convert Data Type on Existing Arrays
+# The best way to change the data type of an existing array, is to make a copy of the array with the astype() method. The astype() function creates a copy of the array, and allows you to specify the data type as a parameter. The data type can be specified using a string, like 'f' for float, 'i' for integer etc. or you can use the data type directly like float for float and int for integer.
+
+arr = np.array([1.1, 2.1, 3.1])
+
+newarr = arr.astype('i')  # Change data type from float to integer
+
+print(newarr)
+print(newarr.dtype)
+
+arr = np.array([1.1, 2.1, 3.1])
+
+newarr = arr.astype(int)  # Change data type from float to integer
+
+print(newarr)
+print(newarr.dtype)
+
+
+arr = np.array([1, 0, 3])
+
+newarr = arr.astype(bool) # Change data type from integer to boolean
+
+print(newarr)
+print(newarr.dtype)
+
+# NumPy Array Copy vs View
+# The main difference between a copy and a view of an array is that the copy is a new array, and the view is just a view of the original array. The copy owns the data and any changes made to the copy will not affect original array, and any changes made to the original array will not affect the copy. However the view dowes not own the original data any changes made to it will affect it(the view)
+
+# COPY
+arr = np.array([1, 2, 3, 4, 5])
+x = arr.copy()
+arr[0] = 42
+
+print(arr)
+print(x)
+
+
+# VIEW
+arr = np.array([1, 2, 3, 4, 5])
+x = arr.view() 
+arr[0] = 42
+
+print(arr)
+print(x)
+
+# lets do both view and copy together
+arr = np.array([1, 2, 3, 4, 5])
+
+x = arr.copy()
+y = arr.view()
+
+print(x.base)
+print(y.base)
+
+# NumPy Array Shape
+# The shape of an array is the number of elements in each dimension.NumPy arrays have an attribute called shape that returns a tuple with each index having the number of corresponding elements.
+
 
 ```
 # References 
