@@ -1005,6 +1005,7 @@ newarr = arr.astype(bool) # Change data type from integer to boolean
 print(newarr)
 print(newarr.dtype)
 
+
 # NumPy Array Copy vs View
 # The main difference between a copy and a view of an array is that the copy is a new array, and the view is just a view of the original array. The copy owns the data and any changes made to the copy will not affect original array, and any changes made to the original array will not affect the copy. However the view dowes not own the original data any changes made to it will affect it(the view)
 
@@ -1036,6 +1037,183 @@ print(y.base)
 
 # NumPy Array Shape
 # The shape of an array is the number of elements in each dimension.NumPy arrays have an attribute called shape that returns a tuple with each index having the number of corresponding elements.
+arr = np.array([[1, 2, 3, 4], [5, 6, 7, 8]])
+
+print(arr.shape)   # (2. 4)
+
+arr = np.array([1, 2, 3, 4], ndmin=5)
+
+print(arr)
+print('shape of array :', arr.shape)
+
+# NumPy Array Reshaping
+# Reshaping means changing the shape of an array. The shape of an array is the number of elements in each dimension by reshaping we can add or remove dimensions or change number of elements in each dimension. We can reshape into any shape as long as the elements required for reshaping are equal in both shapes.
+
+# Reshape From 1-D to 2-D
+# Convert the following 1-D array with 12 elements into a 2-D array.
+# The outermost dimension will have 4 arrays, each with 3 elements
+arr = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
+
+newarr = arr.reshape(4, 3)
+
+print(newarr)
+
+# Reshape From 1-D to 3-D
+# The outermost dimension will have 2 arrays that contains 3 arrays, each with 2 elements
+arr = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
+
+newarr = arr.reshape(2, 3, 2)
+
+print(newarr)
+
+# Flattening the arrays
+# This means converting a multidimensional array into a 1D array
+arr = np.array([[1, 2, 3], [4, 5, 6]])
+
+newarr = arr.reshape(-1)
+
+print(newarr)
+
+# Iterating Arrays
+# This means going through elerments one by one. As we deal with multi-dimemsion arrays in numpy, we can do this using basic for loop. 
+
+# Iterate through 1-D
+arr = np.array([1, 2, 3])
+
+for x in arr:
+  print(x)
+
+# Iterate through 2-D
+arr = np.array([[1, 2, 3], [4, 5, 6]])
+
+for x in arr:
+  print(x)
+
+
+# Iterate through 3-D
+arr = np.array([[[1, 2, 3], [4, 5, 6]], [[7, 8, 9], [10, 11, 12]]])
+
+for x in arr:
+  print(x)
+
+
+arr = np.array([[[1, 2, 3], [4, 5, 6]], [[7, 8, 9], [10, 11, 12]]])
+
+for x in arr:
+  for y in x:
+    for z in y:
+      print(z)
+
+# We can use *diter() for iterating through 
+arr = np.array([[[1, 2], [3, 4]], [[5, 6], [7, 8]]])
+
+for x in np.nditer(arr):
+  print(x)
+
+
+# Iterating arrays with different data types 
+arr = np.array([1, 2, 3])
+
+for x in np.nditer(arr, flags=['buffered'], op_dtypes=['S']):
+  print(x)
+
+# Iterating with different step size
+arr = np.array([[1, 2, 3, 4], [5, 6, 7, 8]])
+
+for x in np.nditer(arr[:, ::2]):
+  print(x)
+
+# Iterating using ndenumerate()
+arr = np.array([1, 2, 3])
+
+for idx, x in np.ndenumerate(arr):
+  print(idx, x)
+
+
+arr = np.array([[1, 2, 3, 4], [5, 6, 7, 8]])
+
+for idx, x in np.ndenumerate(arr):
+  print(idx, x)
+
+# Joining Numpy Arrays
+# Joining means putting contents of two or more arrays in a single array. In SQL we join tables based on a key, whereas in NumPy we join arrays by axes. We pass a sequence of arrays that we want to join to the concatenate() function, along with the axis. If axis is not explicitly passed, it is taken as 0
+
+# Join Using Concatenate
+# lets join two arrays
+arr1 = np.array([1, 2, 3])
+
+arr2 = np.array([4, 5, 6])
+
+arr = np.concatenate((arr1, arr2))
+
+print(arr)
+
+# lets join 2-D arrays along row (axis=1)
+arr1 = np.array([[1, 2], [3, 4]])
+
+arr2 = np.array([[5, 6], [7, 8]])
+
+arr = np.concatenate((arr1, arr2), axis=1)
+
+print(arr)
+
+# Join using *stack()*
+# Stacking is same as concatenation, the only difference is that stacking is done along a new axis. We can concatenate two 1-D arrays along the second axis which would result in putting them one over the other, ie. stacking. We pass a sequence of arrays that we want to join to the stack() method along with the axis. If axis is not explicitly passed it is taken as 0.
+
+arr1 = np.array([1, 2, 3])
+
+arr2 = np.array([4, 5, 6])
+
+arr = np.stack((arr1, arr2), axis=1)
+
+print(arr)
+
+# Join using *hstack()* which stacks along rows
+arr1 = np.array([1, 2, 3])
+
+arr2 = np.array([4, 5, 6])
+
+arr = np.hstack((arr1, arr2))
+
+print(arr)
+
+
+# Join using *vstack()* stcks along columns
+arr1 = np.array([1, 2, 3])
+
+arr2 = np.array([4, 5, 6])
+
+arr = np.vstack((arr1, arr2))
+
+print(arr)
+
+# Join using *dstack()* stack along height, which is the same as depth
+arr1 = np.array([1, 2, 3])
+
+arr2 = np.array([4, 5, 6])
+
+arr = np.dstack((arr1, arr2))
+
+print(arr)
+
+# Numpy Split Arrays
+# Splitting is reverse operation of Joining. Joining merges multiple arrays into one and Splitting breaks one array into multiple. We use array_split() for splitting arrays, we pass it the array we want to split and the number of splits.
+
+# Lets split an array in 3 parts
+arr = np.array([1, 2, 3, 4, 5, 6])
+
+newarr = np.array_split(arr, 3)
+
+print(newarr)  # list of 3 arrays
+
+# lets split an array in 4 parts
+arr = np.array([1, 2, 3, 4, 5, 6])
+
+newarr = np.array_split(arr, 4)
+
+print(newarr)    # list of 4 arrays
+
+
 
 
 ```
