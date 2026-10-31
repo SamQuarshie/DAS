@@ -1212,15 +1212,480 @@ arr = np.array([1, 2, 3, 4, 5, 6])
 newarr = np.array_split(arr, 4)
 
 print(newarr)    # list of 4 arrays
+```
+# Pandas
+```python
+Pandas is a Python library used for data manipulation and analysis. It helps us work with structured data, such as Excel spreadsheets, CSV files, SQL tables, and other datasets.
+Think of Pandas as an Excel spreadsheet inside Python, but with much greater flexibility and automation. We use import pandas as pd as the means to access the pandas library.
+
+import pandas as pd
+
+## Data Ingestion & Inspection
+Data ingestion means bringing data into Python from different sources so that we can work on it. Imagine a bank gives you customer information in an Excel file. Before you can analyse customers or build a loan default prediction model, you must first bring that information into Python. Pandas supports different data sources, including CSV, Excel, JSON, SAV, SPSS, and SQL databases. Data inspection means examining the dataset after loading it to understand what it contains
+
+raw = pd.DataFrame({
+    "name": ["Ama", "Kojo", "Efua", "Yaw", "Adjoa", "Nii"],
+    "age": [23, 35, 41, 29, 52, 38],
+    "branch": ["Osu", "Adenta", "Tema", "Osu", "Madina", "Tema"],
+    "loan_amount": [3000, 1500, 5000, 2500, 8000, 4200],
+})
+
+raw.to_csv("loans.csv", index=False)
+raw.to_json("loans.json", orient="records")
+raw.to_excel("loans.xlsx", index=False)        # needs openpyxl
+
+# Real life scenarios examples
+This is the most common way to start pandas
+
+# Example 1 — read a CSV file
+df = pd.read_csv("loans.csv")
+print("printing results: read_csv")
+print(df)
+
+# Example 2 — read a JSON file
+df_json = pd.read_json("loans.json")
+print("\nprinting results: read_json")
+
+print(df_json)
+df_excel = pd.read_excel("loans.xlsx")
+
+# Example 3 — read an Excel file
+print("\nExample 3: read_excel")
+print(df_excel)
+
+# Example 4 — head()
+print("\nExample 4: head")
+print(df.head(3))
+
+# Example 5 — tail() shows the last rows.
+print("\nExample 5: tail")
+print(df.tail(2))
+
+# Example 6 — shape tells you (rows, columns)
+print(df.shape)
+print("Rows:", df.shape[0], "| Columns:", df.shape[1])
+
+# Example 7 — column names and the type of each column.
+print("\nExample 7: columns and types")
+print(df.columns.tolist())
+print(df.dtypes)
+
+# Example 8 — info() is a quick health report of the whole table.
+print("\nExample 8: info")
+df.info()
+
+# Example 9 — describe() summarises the number columns. For now, look only at
+# count, mean, min and max. The other rows are explained in the statistics lessons.
+print("\nExample 9: describe")
+print(df.describe())
+
+# Example 10 — count how often each value appears in a column.
+print("\nExample 10: value_counts")
+print(df["branch"].value_counts())
+print("Different branches:", df["branch"].nunique())
+
+## Selection & Filtering
+df = pd.DataFrame({
+    "name": ["Ama", "Kojo", "Efua", "Yaw", "Adjoa", "Nii"],
+    "age": [23, 35, 41, 29, 52, 38],
+    "branch": ["Osu", "Adenta", "Tema", "Osu", "Madina", "Tema"],
+    "loan_amount": [3000, 1500, 5000, 2500, 8000, 4200],
+})
+
+# Example 1 — one column. Use its name in square brackets.
+print("Example 1: one column")
+print(df["name"])
+
+# Example 2 — several columns. Place the names in a list, so there are TWO square brackets.
+print("\nExample 2: several columns")
+print(df[["name", "loan_amount"]])
+
+# Example 3 — one row, by its row label, with loc.
+print("\nExample 3: one row with loc")
+print(df.loc[2])
+
+# Example 4 — rows and columns together with loc: first the rows, then the columns.
+# With loc, the last row in a slice IS included.
+print("\nExample 4: loc rows 1 to 3, chosen columns")
+print(df.loc[1:3, ["name", "branch"]])
+
+# Example 5 — by position with iloc: the first row is 0, the first column is 0.
+# With iloc, the last number in a slice is NOT included.
+print("\nExample 5: iloc")
+print(df.iloc[0:3, 0:2])
+
+# Example 6 — filter with one condition. Pandas checks every row and keeps the True ones.
+print("\nExample 6: loans above 4000")
+print(df[df["loan_amount"] > 4000])
+
+# Example 7 — filter for an exact match with ==.
+print("\nExample 7: clients in Osu")
+print(df[df["branch"] == "Osu"])
+
+# Example 8 — two conditions. Use & for AND. Put each condition in round brackets.
+print("\nExample 8: Osu AND loan above 2500")
+print(df[(df["branch"] == "Osu") & (df["loan_amount"] > 2500)])
+
+# Example 9 — isin() checks whether a value is in a list. Neater than many OR conditions.
+print("\nExample 9: Osu or Tema")
+print(df[df["branch"].isin(["Osu", "Tema"])])
+
+# Example 10 — sort so the biggest comes first, or take the top rows directly.
+print("\nExample 10: sorting")
+print(df.sort_values("loan_amount", ascending=False))
+print(df.nlargest(3, "loan_amount"))
+
+## Handling Missing Data(Data cleaning)
+rd = pd.DataFrame({
+    "name": ["Ama", "Kojo", "Efua", "Yaw", "Adjoa", "Kojo"],
+    "age": [23, 35, None, 29, 250, 35],                       # a missing age and an impossible age (250)
+    "branch": ["Osu", "Adenta", "Tema", None, "Madina", "Adenta"],   # a missing branch
+    "loan_amount": [3000, 1500, None, 2500, 8000, 1500],      # a missing loan
+    "signup_date": ["2025-01-15", "2025-03-10", "2025-06-01",
+                    "not a date", "2025-09-05", "2025-03-10"],   # a bad date
+})
+print("The messy table:")
+print(rd)
+
+# Example 1 — how many empty cells are in each column
+print("\nExample 1: empty cells per column")
+print(rd.isnull().sum())
+
+# Example 2 — as a percentage of the rows.
+print("\nExample 2: percentage empty")
+print((rd.isnull().sum() / len(rd) * 100).round(1))
+
+# Example 3 — dropna() removes every row that has ANY empty cell. Quickly, but we lose data.
+d = rd.dropna()
+print("\nExample 3: dropna")
+print("Rows before:", len(rd), "| after:", len(d))
+
+# Example 4 — remove rows only if one chosen column is empty.
+d = rd.dropna(subset=["loan_amount"])
+print("\nExample 4: dropna on one column")
+print("Rows before:", len(raw), "| after:", len(d))
+
+# Example 5 — fill empty cells with a fixed value. Text gets a label, a count gets 0.
+d = rd.copy()
+d["branch"] = d["branch"].fillna("Unknown")
+d["loan_amount"] = d["loan_amount"].fillna(0)
+print("\nExample 5: fill with a fixed value")
+print(d[["branch", "loan_amount"]])
+
+# Example 6 — fill a number column with its average.
+d = raw.copy()
+average_loan = d["loan_amount"].mean()
+d["loan_amount"] = d["loan_amount"].fillna(average_loan)
+print("\nExample 6: fill with the average")
+print("Average used:", average_loan)
+print(d["loan_amount"])
+
+# Example 7 — fill a text column with its most common value.
+d = rd.copy()
+most_common = d["branch"].mode()[0]
+d["branch"] = d["branch"].fillna(most_common)
+print("\nExample 7: fill with the most common value")
+print("Most common branch:", most_common)
+print(d["branch"])
+
+# Example 8 — wrong format. Turn text into real dates. errors="coerce" turns a bad date into
+# NaT (Not a Time) instead of crashing.
+d = rd.copy()
+d["signup_date"] = pd.to_datetime(d["signup_date"], errors="coerce")
+print("\nExample 8: fix the date format")
+print(d["signup_date"])
+print("Bad dates found:", d["signup_date"].isnull().sum())
+
+# Example 9 — wrong data. An age of 250 is impossible. Replace it with the average of the good ages.
+# (The empty age in row 2 is a different problem. It is fixed the same way as Example 6.)
+d = rd.copy()
+good_average = d.loc[d["age"] <= 100, "age"].mean()
+d.loc[d["age"] > 100, "age"] = good_average
+print("\nExample 9: fix the impossible age")
+print(d["age"])
+
+# Example 10 — duplicates. duplicated() finds repeated rows; drop_duplicates() removes them.
+print("\nExample 10: duplicates")
+print("Repeated rows:", raw.duplicated().sum())
+d = raw.drop_duplicates()
+print("Rows before:", len(raw), "| after:", len(d))
+
+## Categorical Encoding
+df = pd.DataFrame({
+    "name": ["Ama", "Kojo", "Efua", "Yaw", "Adjoa", "Nii"],
+    "age": [23, 35, 41, 29, 52, 38],
+    "gender": ["Female", "Male", "Female", "Male", "Female", "Male"],
+    "branch": ["Osu", "Adenta", "Tema", "Osu", "Madina", "Tema"],
+    "has_guarantor": ["Yes", "no", "YES ", "Yes", "No", "no"],    # messy on purpose
+    "is_active": [True, False, True, True, False, True],
+    "risk_level": ["Low", "High", "Medium", "Low", "High", "Medium"],
+    "loan_amount": [3000, 1500, 5000, 2500, 8000, 4200],
+})
+
+# Example 1 — first look at the categories: which values exist and how often
+print("Example 1: look at the categories")
+print(df["branch"].unique())
+print(df["has_guarantor"].value_counts())
+
+# Example 2 — tidy the text first. "Yes", "YES " and "yes" must all become one value.
+df["has_guarantor"] = df["has_guarantor"].str.strip().str.lower()
+print("\nExample 2: tidy the text")
+print(df["has_guarantor"].value_counts())
+
+# Example 3 — Yes/No to 1/0 with map() and a dictionary.
+df["guarantor_num"] = df["has_guarantor"].map({"yes": 1, "no": 0})
+print("\nExample 3: map with a dictionary")
+print(df[["has_guarantor", "guarantor_num"]])
+
+# Example 4 — True/False to 1/0 with astype(int).
+df["active_num"] = df["is_active"].astype(int)
+print("\nExample 4: True/False to 1/0")
+print(df[["is_active", "active_num"]])
+
+# Example 5 — labels that HAVE an order. Low < Medium < High, so the numbers must follow it.
+df["risk_num"] = df["risk_level"].map({"Low": 0, "Medium": 1, "High": 2})
+print("\nExample 5: ordered labels")
+print(df[["risk_level", "risk_num"]])
+
+# Example 6 — give each category a number (label encoding). Quick, but it invents an order
+# that does not really exist (Tema is not "bigger" than Osu). Use it with care.
+df["branch_code"] = df["branch"].astype("category").cat.codes
+print("\nExample 6: category codes")
+print(df[["branch", "branch_code"]])
+
+# Example 7 — one-hot encoding: one new 0/1 column for each category. No false order.
+print("\nExample 7: get_dummies")
+print(pd.get_dummies(df["branch"], dtype=int))
+
+# Example 8 — drop_first=True removes one column. That column can always be worked out from the others 
+# (if it is not Adenta, Madina or Osu, it must be Tema).
+print("\nExample 8: get_dummies with drop_first")
+print(pd.get_dummies(df["branch"], drop_first=True, dtype=int))
+
+# Example 9 — one-hot encode several columns in one go.
+print("\nExample 9: several columns at once")
+print(pd.get_dummies(df[["name", "gender", "branch"]], columns=["gender", "branch"], dtype=int))
+
+# Example 10 — put it together and check that only numbers are left.
+ready = df[["age", "loan_amount", "guarantor_num", "active_num", "risk_num"]].copy()
+ready = pd.concat([ready, pd.get_dummies(df["branch"], dtype=int)], axis=1)
+print("\nExample 10: a table that is all numbers")
+print(ready)
+print(ready.dtypes)
 
 
+## Feature Engineering
+df = pd.DataFrame({
+    "name": ["Ama Serwaa", "Kojo Mensah", "Efua Boateng", "Yaw Asare", "Adjoa Owusu", "Nii Lamptey"],
+    "age": [23, 35, 41, 29, 52, 38],
+    "income": [2500, 4200, 6000, 3100, 8500, 3900],
+    "bonus": [200, 0, 500, 100, 800, 0],
+    "loan_amount": [3000, 5000, 12000, 2500, 20000, 4800],
+    "start_date": ["2025-01-15", "2025-03-10", "2025-06-01", "2025-07-22", "2025-09-05", "2025-11-30"],
+})
+df["start_date"] = pd.to_datetime(df["start_date"])
 
+# Example 1 — add two columns together.
+df["total_income"] = df["income"] + df["bonus"]
+print("Example 1: add columns")
+print(df[["name", "income", "bonus", "total_income"]])
+
+# Example 2 — multiply a column. A 5% fee on every loan.
+df["fee"] = df["loan_amount"] * 0.05
+print("\nExample 2: multiply a column")
+print(df[["name", "loan_amount", "fee"]])
+
+# Example 3 — divide one column by another. How many times bigger is the loan than the income?
+df["loan_to_income"] = (df["loan_amount"] / df["income"]).round(2)
+print("\nExample 3: a ratio")
+print(df[["name", "loan_amount", "income", "loan_to_income"]])
+
+# Example 4 — a yes/no flag with np.where(condition, value_if_true, value_if_false).
+df["high_risk"] = np.where(df["loan_to_income"] > 1.5, 1, 0)
+print("\nExample 4: np.where flag")
+print(df[["name", "loan_to_income", "high_risk"]])
+
+# Example 5 — lets apply the function on pandas data, applied to every value. This is the if/elif/else
+def loan_size(amount):
+    if amount >= 10000:
+        return "Large"
+    elif amount >= 4000:
+        return "Medium"
+    else:
+        return "Small"
+
+df["loan_size"] = df["loan_amount"].apply(loan_size)
+print("\nExample 5: apply a function")
+print(df[["name", "loan_amount", "loan_size"]])
+
+# Example 6 — more than two outcomes with np.select(conditions, labels, default).
+# It is if/elif/else for a whole column at once.
+conditions = [df["loan_to_income"] < 1.0, df["loan_to_income"] < 1.5]
+labels = ["Low", "Medium"]
+df["risk_band"] = np.select(conditions, labels, default="High")
+print("\nExample 6: np.select")
+print(df[["name", "loan_to_income", "risk_band"]])
+
+# Example 7 — put numbers into groups with pd.cut. You choose where each group starts and ends.
+df["age_group"] = pd.cut(df["age"], bins=[17, 30, 45, 100], labels=["Young", "Middle", "Senior"])
+print("\nExample 7: age groups")
+print(df[["name", "age", "age_group"]])
+
+# Example 8 — pull parts out of a date with .dt
+df["start_year"] = df["start_date"].dt.year
+df["start_month"] = df["start_date"].dt.month
+df["weekday"] = df["start_date"].dt.day_name()
+print("\nExample 8: parts of a date")
+print(df[["name", "start_date", "start_year", "start_month", "weekday"]])
+
+# Example 9 — pull parts out of text with .str
+df["first_name"] = df["name"].str.split().str[0]
+df["last_name"] = df["name"].str.split().str[-1]
+df["name_length"] = df["name"].str.len()
+print("\nExample 9: parts of text")
+print(df[["name", "first_name", "last_name", "name_length"]])
+
+# Example 10 — tidy up: rename a column, drop columns you no longer need.
+tidy = df.rename(columns={"loan_amount": "loan"})
+tidy = tidy.drop(columns=["bonus", "start_date", "name_length"])
+print("\nExample 10: rename and drop")
+print(tidy.columns.tolist())
+
+## Combining & Aggregation of Datasets
+clients_a = pd.DataFrame({"client_id": [1, 2, 3], "name": ["Ama", "Kojo", "Efua"], "branch_id": [10, 20, 10]})
+clients_b = pd.DataFrame({"client_id": [4, 5], "name": ["Yaw", "Adjoa"], "branch_id": [30, 20]})
+clients = pd.concat([clients_a, clients_b], ignore_index=True)
+
+loans = pd.DataFrame({
+    "loan_id": [501, 502, 503, 504, 505],
+    "client_id": [1, 2, 2, 4, 6],               # client 6 is not in the clients table
+    "amount": [3000, 1500, 2200, 5000, 4000],
+    "status": ["Paid", "Active", "Paid", "Active", "Active"],
+})
+branches = pd.DataFrame({"branch_id": [10, 20, 30], "branch_name": ["Osu", "Adenta", "Tema"]})
+
+# Example 1 — stack tables that have the same columns, one below the other.
+print("Example 1: concat rows")
+print(pd.concat([clients_a, clients_b], ignore_index=True))
+
+# Example 2 — place tables side by side (axis=1). Rows are matched by position.
+scores = pd.DataFrame({"credit_score": [620, 580, 700]})
+print("\nExample 2: concat columns")
+print(pd.concat([clients_a, scores], axis=1))
+
+# Example 3 — merge, keeping only clients who appear in BOTH tables (inner).
+print("\nExample 3: inner merge")
+print(loans.merge(clients, on="client_id", how="inner"))
+
+# Example 4 — keep every row of the left table (left). Missing matches show as NaN.
+print("\nExample 4: left merge")
+print(clients.merge(loans, on="client_id", how="left"))
+
+# Example 5 — keep everything from both tables (outer).
+print("\nExample 5: outer merge")
+print(clients.merge(loans, on="client_id", how="outer"))
+
+# Example 6 — when the key column has a different name in each table, use left_on and right_on.
+loans_renamed = loans.rename(columns={"client_id": "cust_id"})
+print("\nExample 6: different key names")
+print(clients.merge(loans_renamed, left_on="client_id", right_on="cust_id", how="inner"))
+
+# Example 7 — join three tables into one, then add up the loans for each branch.
+full = loans.merge(clients, on="client_id").merge(branches, on="branch_id")
+print("\nExample 7: one full table, then groupby and sum")
+print(full)
+print(full.groupby("branch_name")["amount"].sum())
+
+# Example 8 — count how many loans each branch has.
+print("\nExample 8: groupby and count")
+print(full.groupby("branch_name")["loan_id"].count())
+
+# Example 9 — several summaries at once with agg().
+print("\nExample 9: agg")
+print(full.groupby("branch_name")["amount"].agg(["count", "sum", "max"]))
+
+# Example 10 — pivot_table builds a summary grid like an Excel pivot table.
+print("\nExample 10: pivot_table")
+print(pd.pivot_table(full, values="amount", index="branch_name", columns="status",
+                     aggfunc="sum", fill_value=0))
+
+
+## Exporting to Machine Learning
+from sklearn.model_selection import train_test_split
+
+df = pd.DataFrame({
+    "age":         [23, 35, 41, 29, 52, 38, 45, 31, 27, 60, 34, 48],
+    "income":      [2500, 4200, 6000, None, 8500, 3900, 5200, 3100, None, 7000, 4500, 6400],
+    "loan_amount": [3000, 5000, 12000, 2500, 20000, 4800, 9000, 3500, 3300, 15000, 4000, 11000],
+    "branch":      ["Osu", "Adenta", "Tema", "Osu", "Madina", "Tema",
+                    "Osu", "Adenta", "Tema", "Madina", "Osu", "Adenta"],
+    "defaulted":   [0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1],
+})
+
+# Example 1 — split the table into inputs (X) and the answer (y).
+X = df.drop(columns="defaulted")
+y = df["defaulted"]
+print("Example 1: inputs and answer")
+print("X columns:", X.columns.tolist())
+print("y is the column:", y.name)
+
+# Example 2 — machine-learning tools do not accept empty cells. Look for them first.
+print("\nExample 2: any empty cells?")
+print(X.isnull().sum())
+
+# Example 3 — fill the empty cells (Section 3). Here we use the average income.
+X["income"] = X["income"].fillna(X["income"].mean())
+print("\nExample 3: empty cells left")
+print(X.isnull().sum().sum())
+
+# Example 4 — turn words into numbers (Section 4).
+X = pd.get_dummies(X, columns=["branch"], dtype=int)
+print("\nExample 4: words turned into numbers")
+print(X.head())
+
+# Example 5 — check that every column is a number.
+print("\nExample 5: column types")
+print(X.dtypes)
+
+# Example 6 — turn the tables into plain number grids (NumPy arrays), which many tools prefer.
+X_array = X.to_numpy()
+y_array = y.to_numpy()
+print("\nExample 6: to NumPy")
+print("X array shape:", X_array.shape)
+print("y array shape:", y_array.shape)
+
+# Example 7 — split into a practice set (train) and an exam set (test).
+# test_size=0.25 means a quarter of the rows are kept back for the exam.
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
+print("\nExample 7: practice set and exam set")
+print("Practice rows:", len(X_train), "| Exam rows:", len(X_test))
+
+# Example 8 — random_state=42 means "shuffle the same way every time". Same number, same split.
+a_train, a_test, b_train, b_test = train_test_split(X, y, test_size=0.25, random_state=42)
+print("\nExample 8: the same split twice")
+print("Same practice rows both times:", X_train.index.equals(a_train.index))
+
+# Example 9 — check that practice and exam sets have the same columns.
+print("\nExample 9: matching columns")
+print("Same columns:", X_train.columns.tolist() == X_test.columns.tolist())
+print("Rows in y_train match X_train:", len(y_train) == len(X_train))
+
+# Example 10 — save the practice to files, then load one back to check.
+X_train.assign(defaulted=y_train).to_csv("train.csv", index=False)
+X_test.assign(defaulted=y_test).to_csv("test.csv", index=False)
+print("\nExample 10: saved and loaded back")
+print(pd.read_csv("train.csv").shape)
+```
+
+```pyton
 
 ```
+
 # References 
 w3schools - https://www.w3schools.com/python/  
 geeksforgeeks - https://www.geeksforgeeks.org/python/python-programming-language-tutorial/
-
+Claud ai
+Google
 
 ---
 ---
